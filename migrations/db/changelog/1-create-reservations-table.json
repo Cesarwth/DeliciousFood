@@ -1,0 +1,29 @@
+{
+  "databaseChangeLog": [
+    {
+      "changeSet": {
+        "id": "create-reservations-table",
+        "author": "All",
+        "changes": [
+          {
+            "createTable": {
+              "tableName": "reservations",
+              "columns": [
+                { "column": { "name": "id", "type": "INTEGER", "autoIncrement": "true",
+                  "constraints": { "nullable": false, "primaryKey": true } } },
+                { "column": { "name": "reservation_description", "type": "varchar(4000)", "constraints": { "nullable": false } } },
+                { "column": { "name": "reservation_date", "type": "datetime", "constraints": { "nullable": true } } },
+                { "column": { "name": "check_in_date", "type": "datetime", "constraints": { "nullable": true } } },
+                { "column": { "name": "check_out_date", "type": "datetime", "constraints": { "nullable": true } } },
+                { "column": { "name": "max_reservation_days", "type": "integer", "constraints": { "nullable": false } } },
+                { "column": { "name": "status", "type": "varchar(20)", "constraints": { "nullable": false } } },
+                { "column": { "name": "id_user", "type": "integer", "constraints": { "nullable": false } } },
+                { "column": { "name": "id_room", "type": "integer", "constraints": { "nullable": false } } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
