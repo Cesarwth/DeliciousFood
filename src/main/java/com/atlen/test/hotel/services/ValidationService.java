@@ -14,10 +14,8 @@ import com.atlen.test.hotel.model.enums.RoomStatus;
 import com.atlen.test.hotel.repository.ReservationRepository;
 import com.atlen.test.hotel.repository.RoomRepository;
 import com.atlen.test.hotel.repository.UserRepository;
-import com.atlen.test.hotel.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.persistence.NoResultException;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -41,8 +39,7 @@ public class ValidationService {
     }
 
     public Integer userAlreadyExist(String passportNumber) {
-        Integer id_user = userRepository.findUserByPassportNumber(passportNumber);
-        return id_user;
+        return userRepository.findUserByPassportNumber(passportNumber);
     }
 
     public void saveBook(JsonInputDataDto jsonInputDataDto) {
@@ -91,8 +88,7 @@ public class ValidationService {
 
     private Long differenceDays(Date secondDate, Date firstDate) {
         long differenceInMilliSeconds = Math.abs(secondDate.getTime() - firstDate.getTime());
-        long differenceDays = TimeUnit.DAYS.convert(differenceInMilliSeconds, TimeUnit.MILLISECONDS);
-        return differenceDays;
+        return TimeUnit.DAYS.convert(differenceInMilliSeconds, TimeUnit.MILLISECONDS);
     }
 
     public void validateDateReservation(JsonInputDataDto reservationDto) {
@@ -115,7 +111,7 @@ public class ValidationService {
 
     public void validateAvailabilityRoom() {
         Rooms roms = roomRepository.getById(idRoom);
-        if (roms.getStatus().equals(RoomStatus.UNAVAILABLE)) {
+        if (roms.getStatus() == String.valueOf(RoomStatus.UNAVAILABLE)) {
             throw new LogicBusinessException(Error.VALIDATE_AVAILABILITY_ROOM_EXCEPTION);
         }
     }

@@ -8,8 +8,9 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "passport_number")
+@EqualsAndHashCode(of = "id")
 public class ReservationDto {
+    private Integer id;
     private String reservation_description;
     private Date date_reservation;
     private Date date_check_in;

@@ -1,6 +1,5 @@
 package com.atlen.test.hotel.repository;
 
-import com.atlen.test.hotel.dtos.UserDto;
 import com.atlen.test.hotel.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
