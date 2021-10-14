@@ -1,5 +1,6 @@
 package com.atlen.test.hotel.controllers;
 
+import com.atlen.test.hotel.dtos.CancelationDataDto;
 import com.atlen.test.hotel.dtos.JsonInputDataDto;
 import com.atlen.test.hotel.model.Reservations;
 import com.atlen.test.hotel.services.ReservationService;
@@ -39,23 +40,19 @@ public class BookController {
         }
     }
 
-    /*@PostMapping("/updateReservation")
-    public ResponseEntity<String> updateBook(@RequestBody JsonInputDataDto reservationDto){
+    @PostMapping("/updateReservation")
+    public ResponseEntity<String> updateBook(@RequestBody JsonInputDataDto reservationDto) {
         try {
             reservationService.updateReservation(reservationDto);
             return ResponseEntity.ok("The reservation was updated successfully");
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.internalServerError().body(e.getMessage());
         }
     }
 
     @PostMapping("/cancelReservation")
-    public ResponseEntity<String> cancelBook(@RequestBody JsonInputDataDto reservationDto){
-        try {
-            reservationService.cancelReservation(reservationDto);
-            return ResponseEntity.ok("The reservation was canceled successfully");
-        }catch (Exception e){
-            return ResponseEntity.internalServerError().body(e.getMessage());
-        }
-    }*/
+    public ResponseEntity<String> cancelBook(@RequestBody CancelationDataDto cancelationDataDto) {
+        reservationService.cancelReservation(cancelationDataDto);
+        return ResponseEntity.ok("The reservation was canceled successfully");
+    }
 }

@@ -42,6 +42,10 @@ public class ValidationService {
         return userRepository.findUserByPassportNumber(passportNumber);
     }
 
+    public Integer reservationAlreadyExist(String passportNumber) {
+        return reservationRepository.findReservationByPassportNumber(passportNumber, String.valueOf(ReservationStatus.CANCELED));
+    }
+
     public void saveBook(JsonInputDataDto jsonInputDataDto) {
         saveUser(jsonInputDataDto);
         saveReservation(jsonInputDataDto);
@@ -65,15 +69,24 @@ public class ValidationService {
     }
 
     public void saveReservation(JsonInputDataDto jsonInputDataDto) {
+        Integer id_reservation = reservationAlreadyExist(jsonInputDataDto.getPassportNumber());
         ReservationDto reservationDto = new ReservationDto();
         reservationDto.setReservation_description(jsonInputDataDto.getReservationDescription());
         reservationDto.setDate_reservation(jsonInputDataDto.getDateReservation());
         reservationDto.setDate_check_in(jsonInputDataDto.getDateCheckIn());
         reservationDto.setDate_check_out(jsonInputDataDto.getDateCheckOut());
-        reservationDto.setStatus(String.valueOf(ReservationStatus.CREATED));
         reservationDto.setId_room(idRoom);
         reservationDto.setPassport_number(jsonInputDataDto.getPassportNumber());
-        reservationRepository.save(BookMapper.dtoToReservation(reservationDto));
+        if (id_reservation != null) {
+            reservationDto.setStatus(String.valueOf(ReservationStatus.MODIFIED));
+
+            Reservations actualReservations = BookMapper.dtoToReservation(reservationDto);
+            actualReservations.setId(id_reservation);
+            reservationRepository.save(actualReservations);
+        } else {
+            reservationDto.setStatus(String.valueOf(ReservationStatus.CREATED));
+            reservationRepository.save(BookMapper.dtoToReservation(reservationDto));
+        }
     }
 
     public void verifyStayDays(JsonInputDataDto reservationDto) {
@@ -118,22 +131,36 @@ public class ValidationService {
 
     public void validateAvailabilityDates(JsonInputDataDto jsonInputDataDto) {
         List<Reservations> reservationList = reservationRepository.findAll();
-        for (Reservations reservations : reservationList){
-            Date dateIn = reservations.getDate_check_in();
-            Date dateInJson = jsonInputDataDto.getDateCheckIn();
-            Date dateOut = reservations.getDate_check_out();
-            Date dateOutJson = jsonInputDataDto.getDateCheckOut();
-            if(dateInJson.equals(dateIn) || dateInJson.equals(dateOut)){
-                throw new LogicBusinessException(Error.DATE_CHECK_AVAILABILITY_EXCEPTION);
+        for (Reservations reservations : reservationList) {
+            if (!reservations.getStatus().equals(String.valueOf(ReservationStatus.CANCELED))) {
+                Date dateIn = reservations.getDate_check_in();
+                Date dateInJson = jsonInputDataDto.getDateCheckIn();
+                Date dateOut = reservations.getDate_check_out();
+                Date dateOutJson = jsonInputDataDto.getDateCheckOut();
+                if (dateInJson.compareTo(dateIn) >= 0 && dateInJson.compareTo(dateOut) <= 0) {
+                    throw new LogicBusinessException(Error.DATE_CHECK_AVAILABILITY_EXCEPTION);
+                }
+                if (dateOutJson.compareTo(dateIn) >= 0 && dateOutJson.compareTo(dateOut) <= 0) {
+                    throw new LogicBusinessException(Error.DATE_CHECK_AVAILABILITY_EXCEPTION);
+                }
             }
-            if(dateInJson.compareTo(dateIn) > 0 && dateInJson.compareTo(dateOut) < 0){
-                throw new LogicBusinessException(Error.DATE_CHECK_AVAILABILITY_EXCEPTION);
-            }
-            if(dateOutJson.equals(dateIn) || dateOutJson.equals(dateOut)){
-                throw new LogicBusinessException(Error.DATE_CHECK_AVAILABILITY_EXCEPTION);
-            }
-            if(dateOutJson.compareTo(dateIn) > 0 && dateOutJson.compareTo(dateOut) < 0){
-                throw new LogicBusinessException(Error.DATE_CHECK_AVAILABILITY_EXCEPTION);
+        }
+    }
+
+    public void validateAvailabilityDatesUpdate(JsonInputDataDto jsonInputDataDto) {
+        List<Reservations> reservationList = reservationRepository.findAllExceptTheSame(jsonInputDataDto.getPassportNumber());
+        for (Reservations reservations : reservationList) {
+            if (!reservations.getStatus().equals(String.valueOf(ReservationStatus.CANCELED))) {
+                Date dateIn = reservations.getDate_check_in();
+                Date dateInJson = jsonInputDataDto.getDateCheckIn();
+                Date dateOut = reservations.getDate_check_out();
+                Date dateOutJson = jsonInputDataDto.getDateCheckOut();
+                if (dateInJson.compareTo(dateIn) >= 0 && dateInJson.compareTo(dateOut) <= 0) {
+                    throw new LogicBusinessException(Error.DATE_CHECK_AVAILABILITY_EXCEPTION);
+                }
+                if (dateOutJson.compareTo(dateIn) >= 0 && dateOutJson.compareTo(dateOut) <= 0) {
+                    throw new LogicBusinessException(Error.DATE_CHECK_AVAILABILITY_EXCEPTION);
+                }
             }
         }
     }
