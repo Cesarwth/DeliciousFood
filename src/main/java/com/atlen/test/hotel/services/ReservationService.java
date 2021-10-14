@@ -33,17 +33,16 @@ public class ReservationService extends ValidationService{
     }
 
     public void placeReservation(JsonInputDataDto jsonInputDataDto){
-        super.getIdRoom();
-        super.validateDateReservation(jsonInputDataDto);
-        super.validateMaxDateReservation(jsonInputDataDto);
-        super.validateAvailabilityRoom();
-        super.verifyStayDays(jsonInputDataDto);
-        super.validateAvailabilityDates(jsonInputDataDto, flagUpdate);
-        super.saveBook(jsonInputDataDto);
+        runValidations(jsonInputDataDto, flagUpdate);
     }
 
     public void updateReservation(JsonInputDataDto jsonInputDataDto){
         flagUpdate = true;
+        runValidations(jsonInputDataDto, true);
+        flagUpdate = false;
+    }
+
+    private void runValidations(JsonInputDataDto jsonInputDataDto, Boolean flagUpdate){
         super.getIdRoom();
         super.validateDateReservation(jsonInputDataDto);
         super.validateMaxDateReservation(jsonInputDataDto);
@@ -51,7 +50,6 @@ public class ReservationService extends ValidationService{
         super.verifyStayDays(jsonInputDataDto);
         super.validateAvailabilityDates(jsonInputDataDto, flagUpdate);
         super.saveBook(jsonInputDataDto);
-        flagUpdate = false;
     }
 
     public void cancelReservation(CancelationDataDto cancelationDataDto){
