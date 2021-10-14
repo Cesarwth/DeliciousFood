@@ -1,9 +1,0 @@
-databaseChangeLog:
-  - include:
-      file: db/changelog/0-create-users-table.json
-  - include:
-      file: db/changelog/1-create-reservations-table.json
-  - include:
-      file: db/changelog/2-create-rooms-table.json
-  - include:
-      file: db/changelog/3-insert-records-into-rooms-table.yml

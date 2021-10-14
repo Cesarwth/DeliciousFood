@@ -1,5 +1,6 @@
 package com.atlen.test.hotel.services;
 
+import com.atlen.test.hotel.repository.RoomRepository;
 import com.atlen.test.hotel.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,10 +9,10 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserServiceTest {
+public class RoomServiceTest {
 
     @Mock
-    private UserRepository userRepository;
+    private RoomRepository roomRepository;
 
     private int id = 1;
     private final String name = "Cesar Tenemaza";
@@ -23,7 +24,7 @@ public class UserServiceTest {
     private final UserService userService = new UserService();
 
     @Test
-    public void shouldSaveGivenUser() {
+    public void shouldSaveGivenRoom() {
 
     }
 }

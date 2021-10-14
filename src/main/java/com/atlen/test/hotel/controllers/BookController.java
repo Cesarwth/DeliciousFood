@@ -29,12 +29,33 @@ public class BookController {
         return ResponseEntity.ok(reservationService.findAll());
     }
 
-    @PostMapping()
+    @PostMapping("/placeReservation")
     public ResponseEntity<String> saveBook(@RequestBody JsonInputDataDto reservationDto) {
-        String response = reservationService.placeReservation(reservationDto);
-        if (response.equals("OK"))
-            return ResponseEntity.ok("saved successfully");
-        else
-            return (ResponseEntity<String>) ResponseEntity.badRequest();
+        try {
+            reservationService.placeReservation(reservationDto);
+            return ResponseEntity.ok("The reservation was placed successfully");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
     }
+
+    /*@PostMapping("/updateReservation")
+    public ResponseEntity<String> updateBook(@RequestBody JsonInputDataDto reservationDto){
+        try {
+            reservationService.updateReservation(reservationDto);
+            return ResponseEntity.ok("The reservation was updated successfully");
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/cancelReservation")
+    public ResponseEntity<String> cancelBook(@RequestBody JsonInputDataDto reservationDto){
+        try {
+            reservationService.cancelReservation(reservationDto);
+            return ResponseEntity.ok("The reservation was canceled successfully");
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(e.getMessage());
+        }
+    }*/
 }

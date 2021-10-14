@@ -1,5 +1,7 @@
 package com.atlen.test.hotel.util;
 
+import java.text.SimpleDateFormat;
+
 public class Constants {
-    public static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm";
+    public static final SimpleDateFormat date_format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 }
