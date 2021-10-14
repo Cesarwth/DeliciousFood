@@ -34,8 +34,7 @@ public class ValidationService {
     Integer idRoom;
 
     public void getIdRoom() {
-        Rooms rooms = roomRepository.getById(1);
-        idRoom = rooms.getId();
+        idRoom = roomRepository.findAvailableRoom(String.valueOf(RoomStatus.AVAILABLE));
     }
 
     public Integer userAlreadyExist(String passportNumber) {
@@ -129,26 +128,13 @@ public class ValidationService {
         }
     }
 
-    public void validateAvailabilityDates(JsonInputDataDto jsonInputDataDto) {
-        List<Reservations> reservationList = reservationRepository.findAll();
-        for (Reservations reservations : reservationList) {
-            if (!reservations.getStatus().equals(String.valueOf(ReservationStatus.CANCELED))) {
-                Date dateIn = reservations.getDate_check_in();
-                Date dateInJson = jsonInputDataDto.getDateCheckIn();
-                Date dateOut = reservations.getDate_check_out();
-                Date dateOutJson = jsonInputDataDto.getDateCheckOut();
-                if (dateInJson.compareTo(dateIn) >= 0 && dateInJson.compareTo(dateOut) <= 0) {
-                    throw new LogicBusinessException(Error.DATE_CHECK_AVAILABILITY_EXCEPTION);
-                }
-                if (dateOutJson.compareTo(dateIn) >= 0 && dateOutJson.compareTo(dateOut) <= 0) {
-                    throw new LogicBusinessException(Error.DATE_CHECK_AVAILABILITY_EXCEPTION);
-                }
-            }
-        }
-    }
-
-    public void validateAvailabilityDatesUpdate(JsonInputDataDto jsonInputDataDto) {
-        List<Reservations> reservationList = reservationRepository.findAllExceptTheSame(jsonInputDataDto.getPassportNumber());
+    public void validateAvailabilityDates(JsonInputDataDto jsonInputDataDto, Boolean flagUpdate) {
+        System.out.println("flag" +flagUpdate);
+        List<Reservations> reservationList;
+        if (flagUpdate == true)
+            reservationList = reservationRepository.findAllExceptTheSame(jsonInputDataDto.getPassportNumber());
+        else
+            reservationList = reservationRepository.findAll();
         for (Reservations reservations : reservationList) {
             if (!reservations.getStatus().equals(String.valueOf(ReservationStatus.CANCELED))) {
                 Date dateIn = reservations.getDate_check_in();

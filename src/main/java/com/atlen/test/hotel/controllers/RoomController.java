@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/room")
+@RequestMapping("/api")
 public class RoomController {
 
     @Autowired
     private RoomService roomService;
 
-    @PostMapping
+    @PostMapping("/room")
     public Rooms addRoom(@RequestBody Rooms rooms) {
         return roomService.save(rooms);
     }
 
-    @GetMapping
-    public ResponseEntity<List<Rooms>> getAllAvailableRooms() {
+    @GetMapping("/room")
+    public ResponseEntity<List<Rooms>> getAllRooms() {
         return ResponseEntity.ok(roomService.findAll());
     }
 }

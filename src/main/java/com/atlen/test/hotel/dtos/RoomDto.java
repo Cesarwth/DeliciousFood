@@ -13,4 +13,5 @@ public class RoomDto {
     private Double price;
     private Integer maxStayDays;
     private Integer maxDaysReservation;
+    private String status;
 }

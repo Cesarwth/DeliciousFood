@@ -26,6 +26,8 @@ public class ReservationService extends ValidationService{
     @Autowired
     private RoomRepository roomRepository;
 
+    Boolean flagUpdate = false;
+
     public List<Reservations> findAll() {
         return reservationRepository.findAll();
     }
@@ -36,18 +38,20 @@ public class ReservationService extends ValidationService{
         super.validateMaxDateReservation(jsonInputDataDto);
         super.validateAvailabilityRoom();
         super.verifyStayDays(jsonInputDataDto);
-        super.validateAvailabilityDates(jsonInputDataDto);
+        super.validateAvailabilityDates(jsonInputDataDto, flagUpdate);
         super.saveBook(jsonInputDataDto);
     }
 
     public void updateReservation(JsonInputDataDto jsonInputDataDto){
+        flagUpdate = true;
         super.getIdRoom();
         super.validateDateReservation(jsonInputDataDto);
         super.validateMaxDateReservation(jsonInputDataDto);
         super.validateAvailabilityRoom();
         super.verifyStayDays(jsonInputDataDto);
-        super.validateAvailabilityDatesUpdate(jsonInputDataDto);
+        super.validateAvailabilityDates(jsonInputDataDto, flagUpdate);
         super.saveBook(jsonInputDataDto);
+        flagUpdate = false;
     }
 
     public void cancelReservation(CancelationDataDto cancelationDataDto){
