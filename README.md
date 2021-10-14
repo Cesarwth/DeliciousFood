@@ -53,10 +53,12 @@ Note: this is a simple example to modify a reservation:
        `{"passportNumber": "1722926282"}`
 
 
-###5. To get any resource as a response, use a GET method
+5. To get any resource as a response, use a GET method
 
  `http://localhost:8085/api/room/`
+ 
  `http://localhost:8085/api/user/`
+ 
  `http://localhost:8085/api/reservations/`
 
 
