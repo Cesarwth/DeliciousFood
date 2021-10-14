@@ -38,7 +38,7 @@ public class ReservationService extends ValidationService{
 
     public void updateReservation(JsonInputDataDto jsonInputDataDto){
         flagUpdate = true;
-        runValidations(jsonInputDataDto, true);
+        runValidations(jsonInputDataDto, flagUpdate);
         flagUpdate = false;
     }
 
