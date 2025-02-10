@@ -1,54 +1,88 @@
-# DeliciousFood Aplication
+# DeliciousFood - Online Food Delivery System
 
-## **Technologies to Use**
+## Project Description
 
-- **Sping Boot**: For the backend.
-- **Spring Data JPA**: For the persistence layer.
-- **Lombok**: To reduce boilerplate code.
-- **Spring Security**: For authentication and authorization.
-- **JUnit & Mockito**: For unit testing.
-- **Swagger**: For API documentation.
+**DeliciousFood** is an online platform for ordering food and managing deliveries. It is designed for three main actors:
 
-## **Project Structure**
+- **Users**: Place food orders.
+- **Restaurants**: Manage their menus and receive orders.
+- **Delivery Men**: Handle order deliveries.
 
-### **Entities**
+The system includes modules for:
 
-Mapping of database tables.
+- User, restaurant, and delivery man registration.
+- Restaurant search by category.
+- Order placement and tracking.
+- Notifications for restaurants and delivery men.
 
-### **Repositories**
+## Technologies Used
 
-Spring Data JPA interfaces for database access.
+- **Programming Language**: Java 17
+- **Framework**: Spring Boot 3.1.0
+- **Database**: H2 (development), MySQL/PostgreSQL (production)
+- **API Documentation**: Swagger (SpringDoc OpenAPI)
+- **Unit Testing**: JUnit 5, Mockito
+- **Dependency Management**: Maven
+- **Version Control**: Git
 
-### **Services**
+## Project Structure
 
-Business logic.
+The project follows a **hexagonal architecture** (ports and adapters) to separate business logic from infrastructure.
+The structure is as follows:
 
-### **Controllers**
+## Installation and Execution
 
-REST API endpoints.
+### Prerequisites
 
-### **DTOs**
+- Java 17
+- Maven 3.8+
+- Docker (optional, for containerized execution)
 
-Data Transfer Objects.
+### Steps to Run the Project
 
-### **Unit Tests**
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/Cesarwth/DeliciousFood.git
+   cd deliciousfood
 
-Tests for services and controllers.
+2. **Build the Project:**
+   ```bash
+   mvn clean install
 
-### **Prerequisites**
+3. **Run the Application:**
+   ```bash
+   mvn spring-boot:run
 
-- Install Docker
-- Install Maven
-- Swagger
+4. **Access the API:**
+   ```bash
+   Swagger UI: http://localhost:8080/swagger-ui.html
+   OpenAPI JSON: http://localhost:8080/v3/api-docs
 
-## **Run the application**
+5. **Run with Docker (optional):**
 
-`mvn clean install`
+   Build the image:
+   ```bash
+   docker build -t deliciousfood .
 
-`docker-compose build`
+6. Run the container:
 
-`docker-compose up`
+    ```bash
+    docker run -p 8080:8080 deliciousfood
 
-Note: you can reach the application in POSTMAN in the next context:
+### Usage Examples
 
-`http://localhost:8085/api/<resource>`
+#### Register a User
+
+***Endpoint: POST /api/users***
+
+**Request Body:**
+
+   ```bash
+    {
+    "name": "John Doe",
+    "email": "john@example.com",
+    "password": "password123",
+    "phoneNumber": "123456789",
+    "address": "123 Main St",
+    "role": "USER"
+    }
