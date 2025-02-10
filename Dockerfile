@@ -1,5 +1,8 @@
-FROM openjdk:11
+FROM openjdk:17-jdk-alpine
+VOLUME /tmp
+COPY target/deliciousfood-1.0.0.jar app.jar
+ENTRYPOINT ["java", "-jar", "/app.jar"]
 
-ADD target/alten-hotel.jar alten-hotel.jar
 
-ENTRYPOINT ["java", "-jar", "alten-hotel.jar"]
+
+
