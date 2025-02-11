@@ -5,6 +5,7 @@ import com.deliciousfood.domain.model.FoodItem;
 import java.util.List;
 
 public interface FoodItemRepository {
+
     List<FoodItem> findAll();
 
     FoodItem save(FoodItem foodItem);

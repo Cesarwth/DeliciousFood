@@ -5,6 +5,7 @@ import com.deliciousfood.domain.model.Delivery;
 import java.util.List;
 
 public interface DeliveryService {
+
     List<Delivery> getAllDeliveries();
 
     Delivery createDelivey(Delivery delivery);

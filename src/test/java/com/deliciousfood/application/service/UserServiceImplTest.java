@@ -12,6 +12,8 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,6 +36,7 @@ public class UserServiceImplTest {
 
         assertEquals(1, users.size());
         assertEquals("John Doe", users.get(0).getName());
+        verify(userRepository, times(1)).findAll();
     }
 
     @Test

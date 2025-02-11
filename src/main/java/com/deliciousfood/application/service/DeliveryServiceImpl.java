@@ -3,17 +3,17 @@ package com.deliciousfood.application.service;
 import com.deliciousfood.application.port.in.DeliveryService;
 import com.deliciousfood.application.port.out.DeliveryRepository;
 import com.deliciousfood.domain.model.Delivery;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
+@RequiredArgsConstructor
 public class DeliveryServiceImpl implements DeliveryService {
 
     private final DeliveryRepository deliveryRepository;
-
-    public DeliveryServiceImpl(DeliveryRepository deliveryRepository) {
-        this.deliveryRepository = deliveryRepository;
-    }
-
+    
     @Override
     public List<Delivery> getAllDeliveries() {
         return deliveryRepository.findAll();

@@ -5,6 +5,7 @@ import com.deliciousfood.domain.model.Delivery;
 import java.util.List;
 
 public interface DeliveryRepository {
+
     List<Delivery> findAll();
 
     Delivery save(Delivery delivery);
